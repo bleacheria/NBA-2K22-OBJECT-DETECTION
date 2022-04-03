@@ -1,0 +1,46 @@
+#include <titanone.gph>
+bool delay = FALSE;
+int32 timing;
+
+
+main {
+    if (gcv_ready()) {
+        delay = gcv_read(0);
+        gcv_read(1, &timing);
+    }
+    
+
+    
+    if (delay) if (!(shot)) combo_run(shot);
+        
+    	
+    
+    if (get_val(PS4_R2) || get_val(PS4_L2)) {
+        if(get_val(PS4_LEFT)) set_val(PS4_LEFT, 0.0);
+        else if(get_val(PS4_RIGHT)) set_val(PS4_RIGHT, 0.0);
+    }
+    
+     if (get_val(PS4_LX) < 30 && event_press(PS4_L3)) combo_run(L_quickstop);
+     else if (get_val(PS4_LX) > 30 && event_press(PS4_L3)) combo_run(R_quickstop); 
+    
+}
+
+combo shot {
+    wait(timing);
+    set_val(PS4_SQUARE, 0.0);
+    set_val(PS4_RX, 0.0);
+    set_val(PS4_RY, 0.0);
+    wait(100);
+}
+
+
+combo L_quickstop{ 
+	set_val(PS4_RX, 100);
+	wait(100);
+}
+combo R_quickstop{ 
+	set_val(PS4_RX, -100);
+	wait(100);
+}
+
+#pragma METAINFO("DILEMMABOT", 1, 0, "Dilemma")
